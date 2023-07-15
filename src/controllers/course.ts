@@ -62,7 +62,7 @@ const getCourse: RequestHandler = async (req, res, next) => {
 const getAllCourse: RequestHandler = async (req, res, next) => {
     try {
       const categoryId = req.params.categoryId;
-      const course = await Course.find({category_id:categoryId, userId : req.userId}, {
+      const course = await Course.find({category_id:categoryId}, {
         name: 1,
         category_id: 1,
         image: 1,
@@ -96,7 +96,7 @@ const updateCourse: RequestHandler = async (req, res, next) => {
     const course = await Course.findById(courseId);
 
     if (!course) {
-      const err = new ProjectError("Quiz not found!");
+      const err = new ProjectError("Course not found!");
       err.statusCode = 404;
       throw err;
     }

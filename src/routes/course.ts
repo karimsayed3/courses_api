@@ -9,7 +9,7 @@ import {
   updateCourse,
   deleteCourse,
   getAllCourse,
-  changeFavourCourse
+
 } from "../controllers/course";
 
 
@@ -38,10 +38,6 @@ router.put(
   updateCourse
 );
 
-router.put(
-  "/cou/changeFavoureCourse",  isAuthenticated,
-  changeFavourCourse
-);
 
 //Delete
 //DELETE quiz/:quizId
