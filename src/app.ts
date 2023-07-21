@@ -8,6 +8,7 @@ import categoryRoute from "./routes/category";
 import courseRoute from "./routes/course";
 import lessonRoute from "./routes/lesson";
 import favouriteRoute from "./routes/favourite";
+import enrollmentRouter from "./routes/enroll";
 
 import ProjectError from "./helper/error";
 import { ReturnResponse } from "./utils/interfaces";
@@ -47,6 +48,8 @@ app.use("/course", courseRoute);
 app.use("/lesson", lessonRoute);
 
 app.use("/favourite", favouriteRoute);
+
+app.use("/enroll", enrollmentRouter);
 
 app.use(
   (err: ProjectError, req: Request, res: Response, next: NextFunction) => {

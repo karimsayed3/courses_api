@@ -9,7 +9,7 @@ import {
   updateCourse,
   deleteCourse,
   getAllCourse,
-
+  searchCourse
 } from "../controllers/course";
 
 
@@ -29,6 +29,9 @@ router.get("/getCourseByCourseId/:courseId",   isAuthenticated,
 getCourse);
 router.get("/getAllCoursesByCategoryId/:categoryId",  isAuthenticated,
 getAllCourse);
+
+router.get("/search/:name",  isAuthenticated,
+searchCourse);
 //
 
 //update

@@ -15,9 +15,9 @@ const createCourse: RequestHandler = async (req, res, next) => {
     const completedPercentage = req.body.completedPercentage;
     const favourite = req.body.favourite;
     const author = req.body.author
-    const userId = req.userId
+    const enroll = false;
 
-    const course = new Course({ name, category_id, image, completedPercentage, favourite,author,userId });
+    const course = new Course({ name, category_id, image, completedPercentage, favourite,author ,enroll});
     const result = await course.save();
     const resp: ReturnResponse = {
       status: "success",
@@ -132,11 +132,6 @@ const changeFavourCourse: RequestHandler = async (req, res, next) => {
       err.statusCode = 404;
       throw err;
     }
-    
-    if(course.userId == req.userId){
-      course.favourite = req.body.favourite;
-      await course.save();
-    }
 
     const resp: ReturnResponse = {
       status: "success",
@@ -170,11 +165,45 @@ const deleteCourse: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+const searchCourse: RequestHandler = async (req, res, next) => {
+  try {
+    const name = req.params.name;
+    const course = await Course.find({"$or":[
+      {name:{$regex:name}}
+    ]}, {
+      name: 1,
+      category_id: 1,
+      image: 1,
+      favourite: 1,
+      author: 1,
+      completedPercentage:1,
+    });
+
+    if (!course) {
+      const err = new ProjectError("Courses not found!");
+      err.statusCode = 404;
+      throw err;
+    }
+
+    const resp: ReturnResponse = {
+      status: "success",
+      message: "Course",
+      data: course,
+    };
+    res.status(200).send(resp);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 export {
   createCourse,
   getCourse,
   updateCourse,
   deleteCourse,
   getAllCourse,
-  changeFavourCourse
+  changeFavourCourse,
+  searchCourse,
 };

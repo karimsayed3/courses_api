@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const schema = mongoose.Schema;
 //schema
-const favouriteSchema = new schema(
+const enrollMentSchema = new schema(
   {
     name: {
         type: String,
@@ -50,6 +50,6 @@ const favouriteSchema = new schema(
   { timestamps: true }
 );
 
-const Favourite = mongoose.model("Favourite", favouriteSchema);
+const Enroll = mongoose.model("Enroll", enrollMentSchema);
 
-export default Favourite;
+export default Enroll;

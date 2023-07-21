@@ -1,10 +1,10 @@
 import Course from "../models/course";
-import { RequestHandler } from "express";
+import e, { RequestHandler } from "express";
 import ProjectError from "../helper/error";
 import { ReturnResponse } from "../utils/interfaces";
-import Favourite from "../models/favourite";
+import Enroll from "../models/enroll";
 
-const UpdateFavourite: RequestHandler = async (req, res, next) => {
+const updateEnrollMentCourses: RequestHandler = async (req, res, next) => {
   try {
     const course_id = req.body._id;
     const course = await Course.findById(course_id);
@@ -15,17 +15,17 @@ const UpdateFavourite: RequestHandler = async (req, res, next) => {
       throw err;
     }
 
-    course.favourite = !course.favourite;
+    course.enroll = !course.enroll;
 
     await course.save();
 
     
-    const kk =await Favourite.find({courseId:course._id});
+    const kk =await Enroll.find({courseId:course._id});
     
 
     if(kk.length === 0){
 
-        const enroll = new Favourite({name : course.name, completedPercentage : course.completedPercentage,author:course.author , image: course.image ,
+        const enroll = new Enroll({name : course.name, completedPercentage : course.completedPercentage,author:course.author , image: course.image ,
             favourite :course.favourite, enroll : true,  category_id:course.category_id , userId : req.userId,courseId:course._id
         });
         
@@ -41,7 +41,7 @@ const UpdateFavourite: RequestHandler = async (req, res, next) => {
     }
     else{
 
-        kk[0].favourite = !kk[0].favourite;
+        kk[0].enroll = !kk[0].enroll;
 
         await   kk[0].save();
 
@@ -57,9 +57,9 @@ const UpdateFavourite: RequestHandler = async (req, res, next) => {
   }
 };
 
-const getFavourite : RequestHandler  = async (req,res ,next) =>{
+const getEnrollmentCourses : RequestHandler  = async (req,res ,next) =>{
   try{
-    await Favourite.find({userId : req.userId,favourite:true}).then((dataa)=>{
+    await Enroll.find({userId : req.userId,enroll:true}).then((dataa)=>{
       const resp: ReturnResponse = {
         status: "success",
         message: "Get not published successfully",
@@ -75,4 +75,4 @@ const getFavourite : RequestHandler  = async (req,res ,next) =>{
 
 }
 
-export { UpdateFavourite ,getFavourite };
+export { updateEnrollMentCourses ,getEnrollmentCourses };

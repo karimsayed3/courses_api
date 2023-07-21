@@ -24,17 +24,19 @@ const courseSchema = new schema(
       favourite: 
       {
         type: Boolean,
+        default:false,
+        required: true,
+      },
+      enroll: 
+      {
+        type: Boolean,
+        default:false,
         required: true,
       },
     category_id: {
       type: String,
       required: true,
     },
-    userId:
-    {
-      type: mongoose.Types.ObjectId,
-      required: true,
-    }
   },
   { timestamps: true }
 );
